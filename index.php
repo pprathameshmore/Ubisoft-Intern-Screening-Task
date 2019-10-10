@@ -1,3 +1,62 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$db_name = "registrations";
+
+//Create database
+/* $sql_create_database = "CREATE DATABASE registrations";
+if ($connection->query($sql_create_database) === TRUE) {
+    echo "Database created succefully";
+} else {
+    echo "Error";
+} */
+
+//Create table
+/* $sql_create_table = "CREATE TABLE posts(id int AUTO_INCREMENT PRIMARY KEY,
+                     title varchar(20) NOT NULL, description varchar(20) NOT NULL)";
+
+if ($connection->query($sql_create_table) === TRUE) {
+    echo "Table created succefully </br>";
+} else {
+    echo "Error table";
+} */
+
+//Create connection
+$connection = new mysqli($servername, $username, $password, $db_name);
+
+//Check connection 
+if ($connection->connect_errno) {
+    die("Failed");
+} else {
+    echo "Connected to database";
+}
+if (isset($_POST['submit'])) {
+    $target = "images/" . basename($_FILES['image']['name']);
+
+
+    $title =  $_POST['title'];
+    $description = $_POST['description'];
+    $file = $_FILES['image']['name'];
+
+    $sql_insert_table = "INSERT INTO posts (title, description, image) VALUES ('$title', '$description', '$file')";
+
+    if ($connection->query($sql_insert_table)=== NULL) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql_insert_table . "<br>" . $connection->error;
+    }
+
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+        echo "Uploaded Image";
+    } else {
+        echo "Falied to upload";
+    }
+
+    $connection->close();
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -39,7 +98,7 @@
             </p>
         </div>
         <div class="container">
-            <form name="form" action="view.php" method="post">
+            <form name="form" action="index.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="inputTitle">Title</label>
                     <input type="text" name="title" class="form-control" id="inputTitle" placeholder="Enter email" required>
@@ -48,11 +107,11 @@
                     <label for="inputDesciption">Description</label>
                     <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Enter description" required>
                 </div>
-                <div class="form-group">    
+                <div class="form-group">
                     <label for="inputFile">Upload </label>
-                    <input type="file" name="image" class="form-control" id="inputFile" required>
+                    <input type="file" name="image" class="form-control" id="inputFile" required />
                 </div>
-                <button type="submit" id="btnSumbit" class="btn btn-success">Post</button>
+                <button type="submit" name="submit" id="btnSumbit" class="btn btn-success">Post</button>
                 <button type="reset" id="btnReset" class="btn btn-danger">Reset</button>
             </form>
         </div>
