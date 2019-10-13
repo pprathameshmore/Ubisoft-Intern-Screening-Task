@@ -1,60 +1,50 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db_name = "registrations";
-
-//Create database
-/* $sql_create_database = "CREATE DATABASE registrations";
-if ($connection->query($sql_create_database) === TRUE) {
-    echo "Database created succefully";
-} else {
-    echo "Error";
-} */
-
-//Create table
-/* $sql_create_table = "CREATE TABLE posts(id int AUTO_INCREMENT PRIMARY KEY,
-                     title varchar(20) NOT NULL, description varchar(20) NOT NULL)";
-
-if ($connection->query($sql_create_table) === TRUE) {
-    echo "Table created succefully </br>";
-} else {
-    echo "Error table";
-} */
-
-//Create connection
-$connection = new mysqli($servername, $username, $password, $db_name);
-
-//Check connection 
-if ($connection->connect_errno) {
-    die("Failed");
-} else {
-    echo "Connected to database";
-}
-if (isset($_POST['submit'])) {
-    $target = "images/" . basename($_FILES['image']['name']);
 
 
-    $title =  $_POST['title'];
-    $description = $_POST['description'];
-    $file = $_FILES['image']['name'];
+class Registration
+{
 
-    $sql_insert_table = "INSERT INTO posts (title, description, image) VALUES ('$title', '$description', '$file')";
+    public $connection;
 
-    if ($connection->query($sql_insert_table)=== NULL) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $sql_insert_table . "<br>" . $connection->error;
+    public function __construct()
+    {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $db_name = "registrations";
+        $this->connection = new mysqli($servername, $username, $password, $db_name);
     }
 
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-        echo "Uploaded Image";
-    } else {
-        echo "Falied to upload";
-    }
+    function insertData()
+    {
+        if (isset($_POST['submit'])) {
+            $target = "images/" . basename($_FILES['image']['name']);
 
-    $connection->close();
+            $title =  $_POST['title'];
+            $description = $_POST['description'];
+            $file = $_FILES['image']['name'];
+
+            $sql_insert_table = "INSERT INTO posts (title, description, image) VALUES ('$title', '$description', '$file')";
+
+            if ($this->connection->query($sql_insert_table) === NULL) {
+                echo "New record created successfully";
+            } else {
+                echo "Error: " . $sql_insert_table . "<br>" . $this->connection->error;
+            }
+
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+                echo "Uploaded Image";
+            } else {
+                echo "Falied to upload";
+            }
+        }
+        $this->connection->close();
+    }
 }
+
+$reg = new Registration();
+$reg->insertData();
+
 ?>
 
 <!DOCTYPE html>

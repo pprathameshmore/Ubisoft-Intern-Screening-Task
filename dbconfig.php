@@ -1,9 +1,37 @@
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $db_name = "registrations";
 
+
+   class Connect {
+
+    public $servername = "localhost";
+    public $username = "root";
+    public $password = "";
+    public $db_name = "registrations";
+    public $connection;
+
+    public function __construct()
+    {
+       
+        return $this->connection;
+    }
+
+    public getConnection($connection) {
+        return $connection;
+    }
+
+   }
+
+    
+       
+        //Check connection 
+        if ($connection->connect_errno) {
+            return false;
+        } else {
+            echo "Connected to database";
+            return $connection;
+        }
+        
+    
       //Create database
     /* $sql_create_database = "CREATE DATABASE registrations";
     if ($connection->query($sql_create_database) === TRUE) {
@@ -23,13 +51,5 @@
     } */
 
     //Create connection
-    $connection = new mysqli($servername, $username, $password, $db_name);
-
-    //Check connection 
-    if ($connection->connect_errno) {
-        die("Failed");
-    } else {
-        echo "Connected to database";
-    }
 
     ?>
