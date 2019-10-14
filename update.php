@@ -1,14 +1,10 @@
 <?php
+include_once("dbconfig.php");
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db_name = "registrations";
-$connection = new mysqli($servername, $username, $password, $db_name);
+$connect = new Connect();
+$connection = $connect->getConnection();
 
-
-
-$sql_select = "SELECT * FROM posts";
+$sql_select = "SELECT * FROM posts"; // you should get the data using $_GET an
 $queue = array();
 $row = array();
 $i = 0;
@@ -17,9 +13,9 @@ while ($row = $result->fetch_assoc()) {
     $queue[$i] = $row;
     $i++;
 }
-
+echo "<pre>";
 print_r($queue);
-
+echo "</pre>";
 exit();
 
 ?>

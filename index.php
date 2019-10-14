@@ -16,20 +16,10 @@
 
 <body><?php
 
+        include_once("dbconfig.php");
 
-        class Registration
+        class Registration extends Connect
         {
-
-            public $connection;
-
-            public function __construct()
-            {
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $db_name = "registrations";
-                $this->connection = new mysqli($servername, $username, $password, $db_name);
-            }
 
             function insertData()
             {

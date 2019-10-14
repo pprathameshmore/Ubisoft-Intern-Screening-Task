@@ -11,26 +11,19 @@
 
     public function __construct()
     {
-       
-        return $this->connection;
+        $this->connection = new mysqli($this->servername, $this->username, $this->password, $this->db_name);
     }
 
-    public getConnection($connection) {
-        return $connection;
+    public function getConnection() 
+    {
+        if ($this->connection->connect_errno) {
+            die("Error in connecting");
+        } else {
+           return $this->connection;
+        }
     }
-
    }
 
-    
-       
-        //Check connection 
-        if ($connection->connect_errno) {
-            return false;
-        } else {
-            echo "Connected to database";
-            return $connection;
-        }
-        
     
       //Create database
     /* $sql_create_database = "CREATE DATABASE registrations";

@@ -13,13 +13,13 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>View Products</title> <?php include_once("update.php") ?>
+    <title>View Products</title> <?php //include_once("update.php") ?>
 </head>
 
 <body>
 
     <script>
-        setInterval(function () {
+        setInterval(function() {
             $.ajax({
                 url: "update.php", //the page containing php script
                 type: "get", //request type,
@@ -29,9 +29,11 @@
                     "title": "Tanmay Chougule",
                     "description": "Google",
                     "image": "ante-hamersmit-xzOUqqgxqK0-unsplash.jpg"
-                }
+                }, // culprit!
                 success: function(result) {
                     alert(result);
+                    // console.log(result);
+                    // console.log(response);
                 }
             });
         }, 2000);
@@ -40,18 +42,11 @@
         <a href="index.php">Link: Item Registration</a>
     </div><?php
 
-            class View
+        include_once("dbconfig.php");
+
+            class View extends Connect
             {
-
-                public function __construct()
-                {
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "";
-                    $db_name = "registrations";
-                    $this->connection = new mysqli($servername, $username, $password, $db_name);
-                }
-
+               
                 public function showData()
                 {
 
