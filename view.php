@@ -19,16 +19,16 @@
 <body>
 
     <script>
-        setInterval(() => {
+        setInterval(function () {
             $.ajax({
                 url: "update.php", //the page containing php script
                 type: "get", //request type,
                 dataType: 'json',
                 data: {
-                    id="663",
-                    title="Tanmay Chougule",
-                    description = "Google",
-                    image = "ante-hamersmit-xzOUqqgxqK0-unsplash.jpg"
+                    "id": "663",
+                    "title": "Tanmay Chougule",
+                    "description": "Google",
+                    "image": "ante-hamersmit-xzOUqqgxqK0-unsplash.jpg"
                 }
                 success: function(result) {
                     alert(result);
