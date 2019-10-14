@@ -18,6 +18,8 @@ while ($row = $result->fetch_assoc()) {
     $i++;
 }
 
-die($queue);
+print_r($queue);
+
+exit();
 
 ?>
