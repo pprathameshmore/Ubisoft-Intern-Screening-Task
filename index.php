@@ -1,52 +1,3 @@
-<?php
-
-
-class Registration
-{
-
-    public $connection;
-
-    public function __construct()
-    {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $db_name = "registrations";
-        $this->connection = new mysqli($servername, $username, $password, $db_name);
-    }
-
-    function insertData()
-    {
-        if (isset($_POST['submit'])) {
-            $target = "images/" . basename($_FILES['image']['name']);
-
-            $title =  $_POST['title'];
-            $description = $_POST['description'];
-            $file = $_FILES['image']['name'];
-
-            $sql_insert_table = "INSERT INTO posts (title, description, image) VALUES ('$title', '$description', '$file')";
-
-            if ($this->connection->query($sql_insert_table) === NULL) {
-                echo "New record created successfully";
-            } else {
-                echo "Error: " . $sql_insert_table . "<br>" . $this->connection->error;
-            }
-
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-                echo "Uploaded Image";
-            } else {
-                echo "Falied to upload";
-            }
-        }
-        $this->connection->close();
-    }
-}
-
-$reg = new Registration();
-$reg->insertData();
-
-?>
-
 <!DOCTYPE html>
 <html>
 
@@ -57,13 +8,60 @@ $reg->insertData();
     <link rel="stylesheet" href="public/style/style.css">
 
     <!-- script.js -->
-    <script src="public/scripts/script.js"></script>
+    <script src="script.js" type="text/javascript"></script>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
-<body>
+<body><?php
+
+
+        class Registration
+        {
+
+            public $connection;
+
+            public function __construct()
+            {
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $db_name = "registrations";
+                $this->connection = new mysqli($servername, $username, $password, $db_name);
+            }
+
+            function insertData()
+            {
+                if (isset($_POST['submit'])) {
+                    $target = "images/" . basename($_FILES['image']['name']);
+
+                    $title =  $_POST['title'];
+                    $description = $_POST['description'];
+                    $file = $_FILES['image']['name'];
+
+                    $sql_insert_table = "INSERT INTO posts (title, description, image) VALUES ('$title', '$description', '$file')";
+
+                    if ($this->connection->query($sql_insert_table) === NULL) {
+                        echo "New record created successfully";
+                    } else {
+                        echo "Error: " . $sql_insert_table . "<br>" . $this->connection->error;
+                    }
+
+                    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+                        echo "Uploaded Image";
+                    } else {
+                        echo "Falied to upload";
+                    }
+                }
+                $this->connection->close();
+            }
+        }
+
+        $reg = new Registration();
+        $reg->insertData();
+
+        ?>
     <div class="container">
         <div>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
