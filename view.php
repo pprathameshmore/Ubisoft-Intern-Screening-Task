@@ -43,7 +43,7 @@
                     data = result.reverse();
                     len = data.length;
                     //data.shift();
-                    for (var i = len-1; i >= 0; i--) {
+                    for (var i = len - 1; i >= 0; i--) {
                         updateUI(i);
                     }
                     console.log(result);
@@ -53,14 +53,16 @@
             });
         });
 
-        
+
         var interval = setInterval(() => {
-            var remove = data.length;
+            var remove = data.length - 1;
             $("div.col[data-item-index=" + remove + "]").fadeOut(1000);
-            $("div.col[data-item-index=" + remove + "]").remove();
-            data.pop();
             $(".queue").text("Remaining Queue : " + remove);
+            console.log(remove);
+            $("div.col[data-item-index=" + remove + "]").remove();
             remove--;
+            data.pop();
+            
             if (data.length === 0) {
                 clearInterval(interval);
             }
