@@ -13,40 +13,85 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>View Products</title> <?php //include_once("update.php") ?>
+    <title>View Products</title> <?php //include_once("update.php") 
+                                    ?>
 </head>
 
 <body>
 
+    <div class="container-fluid">
+        <div class="row" id="items">
+
+        </div>
+    </div>
+    <div>
+        <p class="queue">Queue </p>
+    </div>
+
     <script>
-        setInterval(function() {
+        var data;
+        $(document).ready(function() {
+
             $.ajax({
                 url: "update.php", //the page containing php script
-                type: "get", //request type,
-                dataType: 'json',
-                data: {
-                    "id": "663",
-                    "title": "Tanmay Chougule",
-                    "description": "Google",
-                    "image": "ante-hamersmit-xzOUqqgxqK0-unsplash.jpg"
-                }, // culprit!
+                type: "GET", //request type,
+                dataType: 'JSON',
                 success: function(result) {
-                    alert(result);
-                    // console.log(result);
-                    // console.log(response);
+                    // Initially show 6 items 
+
+                    data = result.reverse();
+                    len = data.length;
+                    //data.shift();
+                    for (var i = len-1; i >= 0; i--) {
+                        updateUI(i);
+                    }
+                    console.log(result);
+                    console.log(data);
                 }
+
             });
-        }, 2000);
+        });
+
+        var remove = 8;
+        var interval = setInterval(() => {
+            $("div.col[data-item-index=" + remove + "]").fadeOut(1000);
+            data.pop();
+            $("div.col[data-item-index=" + remove + "]").remove();
+            $(".queue").text("Remaining Queue : " + remove);
+            remove--;
+            if (data.length === 0) {
+                clearInterval(interval);
+            }
+            console.log(data);
+        }, 3000);
+
+
+
+        function updateUI(i) {
+            $("#items").append("\
+                                <div class='col' data-item-index='" + i + "'>\
+                                <div class='card text-center' style='width: 18rem;'>\
+                                <img src='images/" + data[i]['image'] + "' class='card-img-top'>\
+                                <div class='card-body'>\
+                                <h5 class='card-title'>" + data[i]['title'] + "</h5>\
+                                <p class='card-text'>" + data[i]['description'] + "</p>\
+                                </div>\
+                                </div>\
+                                </div>\
+                            ");
+        }
+
+        //setInterval(updateUI, 3000);
     </script>
     <div>
         <a href="index.php">Link: Item Registration</a>
     </div><?php
 
-        include_once("dbconfig.php");
+            include_once("dbconfig.php");
 
             class View extends Connect
             {
-               
+
                 public function showData()
                 {
 
@@ -60,7 +105,7 @@
                         $i++;
                     }
 
-                    $count = count($queue);
+                    /* $count = count($queue);
                     echo "<div class='row container-fluid'>";
                     for ($eachItem = $count - 1; $eachItem >= ($count - 6); $eachItem--) {
                         echo "<div class='col'>";
@@ -77,7 +122,7 @@
                     echo "<div>Queue[$count]</div>";
                     var_dump($queue);
                     echo "</br>";
-                    var_dump($queue[0]['title']);
+                    var_dump($queue[0]['title']);*/
                 }
             }
 
