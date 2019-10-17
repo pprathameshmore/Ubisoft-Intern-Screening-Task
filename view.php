@@ -30,6 +30,7 @@
 
     <script>
         var data;
+        var len;
         $(document).ready(function() {
 
             $.ajax({
@@ -52,11 +53,12 @@
             });
         });
 
-        var remove = 8;
+        
         var interval = setInterval(() => {
+            var remove = data.length;
             $("div.col[data-item-index=" + remove + "]").fadeOut(1000);
-            data.pop();
             $("div.col[data-item-index=" + remove + "]").remove();
+            data.pop();
             $(".queue").text("Remaining Queue : " + remove);
             remove--;
             if (data.length === 0) {
