@@ -7,9 +7,6 @@
     <!-- style.css -->
     <link rel="stylesheet" href="public/style/style.css">
 
-    <!-- script.js -->
-    <script src="script.js" type="text/javascript"></script>
-
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -33,15 +30,15 @@
                     $sql_insert_table = "INSERT INTO posts (title, description, image) VALUES ('$title', '$description', '$file')";
 
                     if ($this->connection->query($sql_insert_table) === NULL) {
-                        echo "New record created successfully";
+                        //echo "New record created successfully";
                     } else {
-                        echo "Error: " . $sql_insert_table . "<br>" . $this->connection->error;
+                        //echo "Error: " . $sql_insert_table . "<br>" . $this->connection->error;
                     }
 
                     if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-                        echo "Uploaded Image";
+                        //echo "Uploaded Image";
                     } else {
-                        echo "Falied to upload";
+                        //echo "Falied to upload";
                     }
                 }
                 $this->connection->close();
